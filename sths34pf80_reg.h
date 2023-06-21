@@ -768,7 +768,7 @@ int32_t sths34pf80_tobject_algo_compensation_get(stmdev_ctx_t *ctx, uint8_t *val
 int32_t sths34pf80_presence_abs_value_set(stmdev_ctx_t *ctx, uint8_t val);
 int32_t sths34pf80_presence_abs_value_get(stmdev_ctx_t *ctx, uint8_t *val);
 
-int32_t sths34pf80_reset_algo(stmdev_ctx_t *ctx);
+int32_t sths34pf80_algo_reset(stmdev_ctx_t *ctx);
 
 #ifdef __cplusplus
 }
