@@ -44,13 +44,25 @@ This directory contains the STHS34PF80 component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section2" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section2" aria-hidden="true">
 <label for="collapse-section2" aria-hidden="true">V1.0.1 / 20-Oct-2023</label>
 <div>
 
 ## Main changes
 
 - Fix procedure to change odr in a safe way
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true">
+<label for="collapse-section3" aria-hidden="true">V2.0.0 / 07-Nov-2023</label>
+<div>
+
+## Main changes
+
+- Redefine API name scheme removing "TMOS"
 
 ##
 
