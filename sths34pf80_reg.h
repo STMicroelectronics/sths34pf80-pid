@@ -615,34 +615,34 @@ typedef enum
 int32_t sths34pf80_gain_mode_set(stmdev_ctx_t *ctx, sths34pf80_gain_mode_t val);
 int32_t sths34pf80_gain_mode_get(stmdev_ctx_t *ctx, sths34pf80_gain_mode_t *val);
 
-int32_t sths34pf80_tmos_sensitivity_set(stmdev_ctx_t *ctx, uint16_t *val);
-int32_t sths34pf80_tmos_sensitivity_get(stmdev_ctx_t *ctx, uint16_t *val);
+int32_t sths34pf80_tobject_sensitivity_set(stmdev_ctx_t *ctx, uint16_t *val);
+int32_t sths34pf80_tobject_sensitivity_get(stmdev_ctx_t *ctx, uint16_t *val);
 
 typedef enum
 {
-  STHS34PF80_TMOS_ODR_OFF = 0x0,
-  STHS34PF80_TMOS_ODR_AT_0Hz25 = 0x1,
-  STHS34PF80_TMOS_ODR_AT_0Hz50 = 0x2,
-  STHS34PF80_TMOS_ODR_AT_1Hz = 0x3,
-  STHS34PF80_TMOS_ODR_AT_2Hz = 0x4,
-  STHS34PF80_TMOS_ODR_AT_4Hz = 0x5,
-  STHS34PF80_TMOS_ODR_AT_8Hz = 0x6,
-  STHS34PF80_TMOS_ODR_AT_15Hz = 0x7,
-  STHS34PF80_TMOS_ODR_AT_30Hz = 0x8,
-} sths34pf80_tmos_odr_t;
-int32_t sths34pf80_tmos_odr_set(stmdev_ctx_t *ctx, sths34pf80_tmos_odr_t val);
-int32_t sths34pf80_tmos_odr_get(stmdev_ctx_t *ctx, sths34pf80_tmos_odr_t *val);
+  STHS34PF80_ODR_OFF = 0x0,
+  STHS34PF80_ODR_AT_0Hz25 = 0x1,
+  STHS34PF80_ODR_AT_0Hz50 = 0x2,
+  STHS34PF80_ODR_AT_1Hz = 0x3,
+  STHS34PF80_ODR_AT_2Hz = 0x4,
+  STHS34PF80_ODR_AT_4Hz = 0x5,
+  STHS34PF80_ODR_AT_8Hz = 0x6,
+  STHS34PF80_ODR_AT_15Hz = 0x7,
+  STHS34PF80_ODR_AT_30Hz = 0x8,
+} sths34pf80_odr_t;
+int32_t sths34pf80_odr_set(stmdev_ctx_t *ctx, sths34pf80_odr_t val);
+int32_t sths34pf80_odr_get(stmdev_ctx_t *ctx, sths34pf80_odr_t *val);
 
 int32_t sths34pf80_block_data_update_set(stmdev_ctx_t *ctx, uint8_t val);
 int32_t sths34pf80_block_data_update_get(stmdev_ctx_t *ctx, uint8_t *val);
 
 typedef enum
 {
-  STHS34PF80_TMOS_IDLE_MODE = 0x0,
-  STHS34PF80_TMOS_ONE_SHOT = 0x1,
-} sths34pf80_tmos_one_shot_t;
-int32_t sths34pf80_tmos_one_shot_set(stmdev_ctx_t *ctx, sths34pf80_tmos_one_shot_t val);
-int32_t sths34pf80_tmos_one_shot_get(stmdev_ctx_t *ctx, sths34pf80_tmos_one_shot_t *val);
+  STHS34PF80_IDLE_MODE = 0x0,
+  STHS34PF80_ONE_SHOT = 0x1,
+} sths34pf80_one_shot_t;
+int32_t sths34pf80_one_shot_set(stmdev_ctx_t *ctx, sths34pf80_one_shot_t val);
+int32_t sths34pf80_one_shot_get(stmdev_ctx_t *ctx, sths34pf80_one_shot_t *val);
 
 typedef enum
 {
@@ -658,16 +658,10 @@ int32_t sths34pf80_boot_get(stmdev_ctx_t *ctx, uint8_t *val);
 typedef struct
 {
   uint8_t drdy : 1;
-} sths34pf80_tmos_drdy_status_t;
-int32_t sths34pf80_tmos_drdy_status_get(stmdev_ctx_t *ctx, sths34pf80_tmos_drdy_status_t *val);
+} sths34pf80_drdy_status_t;
+int32_t sths34pf80_drdy_status_get(stmdev_ctx_t *ctx, sths34pf80_drdy_status_t *val);
 
-typedef struct
-{
-  uint8_t tamb_shock_flag : 1;
-  uint8_t mot_flag : 1;
-  uint8_t pres_flag : 1;
-} sths34pf80_tmos_func_status_t;
-int32_t sths34pf80_tmos_func_status_get(stmdev_ctx_t *ctx, sths34pf80_tmos_func_status_t *val);
+int32_t sths34pf80_func_status_get(stmdev_ctx_t *ctx, sths34pf80_func_status_t *val);
 
 int32_t sths34pf80_tobject_raw_get(stmdev_ctx_t *ctx, int16_t *val);
 int32_t sths34pf80_tambient_raw_get(stmdev_ctx_t *ctx, int16_t *val);
@@ -697,26 +691,26 @@ int32_t sths34pf80_lpf_p_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwid
 
 typedef enum
 {
-  STHS34PF80_TMOS_INT_HIZ = 0x0,
-  STHS34PF80_TMOS_INT_DRDY = 0x1,
-  STHS34PF80_TMOS_INT_OR = 0x2,
-} sths34pf80_tmos_route_int_t;
-int32_t sths34pf80_tmos_route_int_set(stmdev_ctx_t *ctx, sths34pf80_tmos_route_int_t val);
-int32_t sths34pf80_tmos_route_int_get(stmdev_ctx_t *ctx, sths34pf80_tmos_route_int_t *val);
+  STHS34PF80_INT_HIZ = 0x0,
+  STHS34PF80_INT_DRDY = 0x1,
+  STHS34PF80_INT_OR = 0x2,
+} sths34pf80_route_int_t;
+int32_t sths34pf80_route_int_set(stmdev_ctx_t *ctx, sths34pf80_route_int_t val);
+int32_t sths34pf80_route_int_get(stmdev_ctx_t *ctx, sths34pf80_route_int_t *val);
 
 typedef enum
 {
-  STHS34PF80_TMOS_INT_NONE = 0x0,
-  STHS34PF80_TMOS_INT_TSHOCK = 0x1,
-  STHS34PF80_TMOS_INT_MOTION = 0x2,
-  STHS34PF80_TMOS_INT_TSHOCK_MOTION = 0x3,
-  STHS34PF80_TMOS_INT_PRESENCE = 0x4,
-  STHS34PF80_TMOS_INT_TSHOCK_PRESENCE = 0x5,
-  STHS34PF80_TMOS_INT_MOTION_PRESENCE = 0x6,
-  STHS34PF80_TMOS_INT_ALL = 0x7,
-} sths34pf80_tmos_int_or_t;
-int32_t sths34pf80_tmos_int_or_set(stmdev_ctx_t *ctx, sths34pf80_tmos_int_or_t val);
-int32_t sths34pf80_tmos_int_or_get(stmdev_ctx_t *ctx, sths34pf80_tmos_int_or_t *val);
+  STHS34PF80_INT_NONE = 0x0,
+  STHS34PF80_INT_TSHOCK = 0x1,
+  STHS34PF80_INT_MOTION = 0x2,
+  STHS34PF80_INT_TSHOCK_MOTION = 0x3,
+  STHS34PF80_INT_PRESENCE = 0x4,
+  STHS34PF80_INT_TSHOCK_PRESENCE = 0x5,
+  STHS34PF80_INT_MOTION_PRESENCE = 0x6,
+  STHS34PF80_INT_ALL = 0x7,
+} sths34pf80_int_or_t;
+int32_t sths34pf80_int_or_set(stmdev_ctx_t *ctx, sths34pf80_int_or_t val);
+int32_t sths34pf80_int_or_get(stmdev_ctx_t *ctx, sths34pf80_int_or_t *val);
 
 typedef struct
 {
