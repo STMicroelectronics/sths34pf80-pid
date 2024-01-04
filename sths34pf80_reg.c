@@ -50,11 +50,13 @@
   * @retval       interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t __weak sths34pf80_read_reg(stmdev_ctx_t *ctx, uint8_t reg,
+int32_t __weak sths34pf80_read_reg(const stmdev_ctx_t *ctx, uint8_t reg,
                                    uint8_t *data,
                                    uint16_t len)
 {
   int32_t ret;
+
+  if (ctx == NULL) return -1;
 
   ret = ctx->read_reg(ctx->handle, reg, data, len);
 
@@ -71,11 +73,13 @@ int32_t __weak sths34pf80_read_reg(stmdev_ctx_t *ctx, uint8_t reg,
   * @retval       interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t __weak sths34pf80_write_reg(stmdev_ctx_t *ctx, uint8_t reg,
+int32_t __weak sths34pf80_write_reg(const stmdev_ctx_t *ctx, uint8_t reg,
                                     uint8_t *data,
                                     uint16_t len)
 {
   int32_t ret;
+
+  if (ctx == NULL) return -1;
 
   ret = ctx->write_reg(ctx->handle, reg, data, len);
 
@@ -101,7 +105,7 @@ int32_t __weak sths34pf80_write_reg(stmdev_ctx_t *ctx, uint8_t reg,
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_device_id_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_device_id_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   int32_t ret;
 
@@ -118,7 +122,7 @@ int32_t sths34pf80_device_id_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_avg_tobject_num_set(stmdev_ctx_t *ctx, sths34pf80_avg_tobject_num_t val)
+int32_t sths34pf80_avg_tobject_num_set(const stmdev_ctx_t *ctx, sths34pf80_avg_tobject_num_t val)
 {
   sths34pf80_avg_trim_t avg_trim;
   int32_t ret;
@@ -142,7 +146,7 @@ int32_t sths34pf80_avg_tobject_num_set(stmdev_ctx_t *ctx, sths34pf80_avg_tobject
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_avg_tobject_num_get(stmdev_ctx_t *ctx, sths34pf80_avg_tobject_num_t *val)
+int32_t sths34pf80_avg_tobject_num_get(const stmdev_ctx_t *ctx, sths34pf80_avg_tobject_num_t *val)
 {
   sths34pf80_avg_trim_t avg_trim;
   int32_t ret;
@@ -198,7 +202,7 @@ int32_t sths34pf80_avg_tobject_num_get(stmdev_ctx_t *ctx, sths34pf80_avg_tobject
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_avg_tambient_num_set(stmdev_ctx_t *ctx, sths34pf80_avg_tambient_num_t val)
+int32_t sths34pf80_avg_tambient_num_set(const stmdev_ctx_t *ctx, sths34pf80_avg_tambient_num_t val)
 {
   sths34pf80_avg_trim_t avg_trim;
   int32_t ret;
@@ -222,7 +226,7 @@ int32_t sths34pf80_avg_tambient_num_set(stmdev_ctx_t *ctx, sths34pf80_avg_tambie
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_avg_tambient_num_get(stmdev_ctx_t *ctx, sths34pf80_avg_tambient_num_t *val)
+int32_t sths34pf80_avg_tambient_num_get(const stmdev_ctx_t *ctx, sths34pf80_avg_tambient_num_t *val)
 {
   sths34pf80_avg_trim_t avg_trim;
   int32_t ret;
@@ -262,7 +266,7 @@ int32_t sths34pf80_avg_tambient_num_get(stmdev_ctx_t *ctx, sths34pf80_avg_tambie
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_gain_mode_set(stmdev_ctx_t *ctx, sths34pf80_gain_mode_t val)
+int32_t sths34pf80_gain_mode_set(const stmdev_ctx_t *ctx, sths34pf80_gain_mode_t val)
 {
   sths34pf80_ctrl0_t ctrl0;
   int32_t ret;
@@ -286,7 +290,7 @@ int32_t sths34pf80_gain_mode_set(stmdev_ctx_t *ctx, sths34pf80_gain_mode_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_gain_mode_get(stmdev_ctx_t *ctx, sths34pf80_gain_mode_t *val)
+int32_t sths34pf80_gain_mode_get(const stmdev_ctx_t *ctx, sths34pf80_gain_mode_t *val)
 {
   sths34pf80_ctrl0_t ctrl0;
   int32_t ret;
@@ -320,7 +324,7 @@ int32_t sths34pf80_gain_mode_get(stmdev_ctx_t *ctx, sths34pf80_gain_mode_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tobject_sensitivity_set(stmdev_ctx_t *ctx, uint16_t *val)
+int32_t sths34pf80_tobject_sensitivity_set(const stmdev_ctx_t *ctx, uint16_t *val)
 {
   sths34pf80_sens_data_t data;
   int32_t ret;
@@ -342,7 +346,7 @@ int32_t sths34pf80_tobject_sensitivity_set(stmdev_ctx_t *ctx, uint16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tobject_sensitivity_get(stmdev_ctx_t *ctx, uint16_t *val)
+int32_t sths34pf80_tobject_sensitivity_get(const stmdev_ctx_t *ctx, uint16_t *val)
 {
   sths34pf80_sens_data_t data;
   int32_t ret;
@@ -361,7 +365,7 @@ int32_t sths34pf80_tobject_sensitivity_get(stmdev_ctx_t *ctx, uint16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-static int32_t sths34pf80_safe_power_down(stmdev_ctx_t *ctx,
+static int32_t sths34pf80_safe_power_down(const stmdev_ctx_t *ctx,
                                                sths34pf80_ctrl1_t ctrl1)
 {
   sths34pf80_func_status_t func_status;
@@ -400,7 +404,7 @@ static int32_t sths34pf80_safe_power_down(stmdev_ctx_t *ctx,
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-static int32_t sths34pf80_odr_safe_set(stmdev_ctx_t *ctx,
+static int32_t sths34pf80_odr_safe_set(const stmdev_ctx_t *ctx,
                                                   sths34pf80_ctrl1_t ctrl1,
                                                   uint8_t odr_new)
 {
@@ -432,7 +436,7 @@ static int32_t sths34pf80_odr_safe_set(stmdev_ctx_t *ctx,
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_odr_set(stmdev_ctx_t *ctx, sths34pf80_odr_t val)
+int32_t sths34pf80_odr_set(const stmdev_ctx_t *ctx, sths34pf80_odr_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   sths34pf80_avg_trim_t avg_trim;
@@ -492,7 +496,7 @@ int32_t sths34pf80_odr_set(stmdev_ctx_t *ctx, sths34pf80_odr_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_odr_get(stmdev_ctx_t *ctx, sths34pf80_odr_t *val)
+int32_t sths34pf80_odr_get(const stmdev_ctx_t *ctx, sths34pf80_odr_t *val)
 {
   sths34pf80_ctrl1_t ctrl1;
   int32_t ret;
@@ -552,7 +556,7 @@ int32_t sths34pf80_odr_get(stmdev_ctx_t *ctx, sths34pf80_odr_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_block_data_update_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_block_data_update_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   int32_t ret;
@@ -576,7 +580,7 @@ int32_t sths34pf80_block_data_update_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_block_data_update_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_block_data_update_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   sths34pf80_ctrl1_t ctrl1;
   int32_t ret;
@@ -597,7 +601,7 @@ int32_t sths34pf80_block_data_update_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_one_shot_set(stmdev_ctx_t *ctx, sths34pf80_one_shot_t val)
+int32_t sths34pf80_one_shot_set(const stmdev_ctx_t *ctx, sths34pf80_one_shot_t val)
 {
   sths34pf80_ctrl2_t ctrl2;
   int32_t ret;
@@ -621,7 +625,7 @@ int32_t sths34pf80_one_shot_set(stmdev_ctx_t *ctx, sths34pf80_one_shot_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_one_shot_get(stmdev_ctx_t *ctx, sths34pf80_one_shot_t *val)
+int32_t sths34pf80_one_shot_get(const stmdev_ctx_t *ctx, sths34pf80_one_shot_t *val)
 {
   sths34pf80_ctrl2_t ctrl2;
   int32_t ret;
@@ -653,7 +657,7 @@ int32_t sths34pf80_one_shot_get(stmdev_ctx_t *ctx, sths34pf80_one_shot_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_mem_bank_set(stmdev_ctx_t *ctx, sths34pf80_mem_bank_t val)
+int32_t sths34pf80_mem_bank_set(const stmdev_ctx_t *ctx, sths34pf80_mem_bank_t val)
 {
   sths34pf80_ctrl2_t ctrl2;
   int32_t ret;
@@ -677,7 +681,7 @@ int32_t sths34pf80_mem_bank_set(stmdev_ctx_t *ctx, sths34pf80_mem_bank_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_mem_bank_get(stmdev_ctx_t *ctx, sths34pf80_mem_bank_t *val)
+int32_t sths34pf80_mem_bank_get(const stmdev_ctx_t *ctx, sths34pf80_mem_bank_t *val)
 {
   sths34pf80_ctrl2_t ctrl2;
   int32_t ret;
@@ -709,7 +713,7 @@ int32_t sths34pf80_mem_bank_get(stmdev_ctx_t *ctx, sths34pf80_mem_bank_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_boot_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_boot_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_ctrl2_t ctrl2;
   int32_t ret;
@@ -733,7 +737,7 @@ int32_t sths34pf80_boot_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_boot_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_boot_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   sths34pf80_ctrl2_t ctrl2;
   int32_t ret;
@@ -752,7 +756,7 @@ int32_t sths34pf80_boot_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_drdy_status_get(stmdev_ctx_t *ctx, sths34pf80_drdy_status_t *val)
+int32_t sths34pf80_drdy_status_get(const stmdev_ctx_t *ctx, sths34pf80_drdy_status_t *val)
 {
   sths34pf80_status_t status;
   int32_t ret;
@@ -772,7 +776,7 @@ int32_t sths34pf80_drdy_status_get(stmdev_ctx_t *ctx, sths34pf80_drdy_status_t *
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_func_status_get(stmdev_ctx_t *ctx, sths34pf80_func_status_t *val)
+int32_t sths34pf80_func_status_get(const stmdev_ctx_t *ctx, sths34pf80_func_status_t *val)
 {
   sths34pf80_func_status_t func_status;
   int32_t ret;
@@ -794,7 +798,7 @@ int32_t sths34pf80_func_status_get(stmdev_ctx_t *ctx, sths34pf80_func_status_t *
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tobject_raw_get(stmdev_ctx_t *ctx, int16_t *val)
+int32_t sths34pf80_tobject_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -815,7 +819,7 @@ int32_t sths34pf80_tobject_raw_get(stmdev_ctx_t *ctx, int16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tambient_raw_get(stmdev_ctx_t *ctx, int16_t *val)
+int32_t sths34pf80_tambient_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -836,7 +840,7 @@ int32_t sths34pf80_tambient_raw_get(stmdev_ctx_t *ctx, int16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tobj_comp_raw_get(stmdev_ctx_t *ctx, int16_t *val)
+int32_t sths34pf80_tobj_comp_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -857,7 +861,7 @@ int32_t sths34pf80_tobj_comp_raw_get(stmdev_ctx_t *ctx, int16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tpresence_raw_get(stmdev_ctx_t *ctx, int16_t *val)
+int32_t sths34pf80_tpresence_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -878,7 +882,7 @@ int32_t sths34pf80_tpresence_raw_get(stmdev_ctx_t *ctx, int16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tmotion_raw_get(stmdev_ctx_t *ctx, int16_t *val)
+int32_t sths34pf80_tmotion_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -899,7 +903,7 @@ int32_t sths34pf80_tmotion_raw_get(stmdev_ctx_t *ctx, int16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tamb_shock_raw_get(stmdev_ctx_t *ctx, int16_t *val)
+int32_t sths34pf80_tamb_shock_raw_get(const stmdev_ctx_t *ctx, int16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -931,7 +935,7 @@ int32_t sths34pf80_tamb_shock_raw_get(stmdev_ctx_t *ctx, int16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_m_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
+int32_t sths34pf80_lpf_m_bandwidth_set(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
 {
   sths34pf80_lpf1_t lpf1;
   int32_t ret;
@@ -955,7 +959,7 @@ int32_t sths34pf80_lpf_m_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwid
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_m_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
+int32_t sths34pf80_lpf_m_bandwidth_get(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
 {
   sths34pf80_lpf1_t lpf1;
   int32_t ret;
@@ -1007,7 +1011,7 @@ int32_t sths34pf80_lpf_m_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwid
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_p_m_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
+int32_t sths34pf80_lpf_p_m_bandwidth_set(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
 {
   sths34pf80_lpf1_t lpf1;
   int32_t ret;
@@ -1031,7 +1035,7 @@ int32_t sths34pf80_lpf_p_m_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandw
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_p_m_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
+int32_t sths34pf80_lpf_p_m_bandwidth_get(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
 {
   sths34pf80_lpf1_t lpf1;
   int32_t ret;
@@ -1083,7 +1087,7 @@ int32_t sths34pf80_lpf_p_m_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandw
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_a_t_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
+int32_t sths34pf80_lpf_a_t_bandwidth_set(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
 {
   sths34pf80_lpf2_t lpf2;
   int32_t ret;
@@ -1107,7 +1111,7 @@ int32_t sths34pf80_lpf_a_t_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandw
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_a_t_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
+int32_t sths34pf80_lpf_a_t_bandwidth_get(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
 {
   sths34pf80_lpf2_t lpf2;
   int32_t ret;
@@ -1159,7 +1163,7 @@ int32_t sths34pf80_lpf_a_t_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandw
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_p_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
+int32_t sths34pf80_lpf_p_bandwidth_set(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t val)
 {
   sths34pf80_lpf2_t lpf2;
   int32_t ret;
@@ -1183,7 +1187,7 @@ int32_t sths34pf80_lpf_p_bandwidth_set(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwid
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_lpf_p_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
+int32_t sths34pf80_lpf_p_bandwidth_get(const stmdev_ctx_t *ctx, sths34pf80_lpf_bandwidth_t *val)
 {
   sths34pf80_lpf2_t lpf2;
   int32_t ret;
@@ -1246,7 +1250,7 @@ int32_t sths34pf80_lpf_p_bandwidth_get(stmdev_ctx_t *ctx, sths34pf80_lpf_bandwid
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_route_int_set(stmdev_ctx_t *ctx, sths34pf80_route_int_t val)
+int32_t sths34pf80_route_int_set(const stmdev_ctx_t *ctx, sths34pf80_route_int_t val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1273,7 +1277,7 @@ int32_t sths34pf80_route_int_set(stmdev_ctx_t *ctx, sths34pf80_route_int_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_route_int_get(stmdev_ctx_t *ctx, sths34pf80_route_int_t *val)
+int32_t sths34pf80_route_int_get(const stmdev_ctx_t *ctx, sths34pf80_route_int_t *val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1309,7 +1313,7 @@ int32_t sths34pf80_route_int_get(stmdev_ctx_t *ctx, sths34pf80_route_int_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_int_or_set(stmdev_ctx_t *ctx, sths34pf80_int_or_t val)
+int32_t sths34pf80_int_or_set(const stmdev_ctx_t *ctx, sths34pf80_int_or_t val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1333,7 +1337,7 @@ int32_t sths34pf80_int_or_set(stmdev_ctx_t *ctx, sths34pf80_int_or_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_int_or_get(stmdev_ctx_t *ctx, sths34pf80_int_or_t *val)
+int32_t sths34pf80_int_or_get(const stmdev_ctx_t *ctx, sths34pf80_int_or_t *val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1389,7 +1393,7 @@ int32_t sths34pf80_int_or_get(stmdev_ctx_t *ctx, sths34pf80_int_or_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_int_mode_set(stmdev_ctx_t *ctx, sths34pf80_int_mode_t val)
+int32_t sths34pf80_int_mode_set(const stmdev_ctx_t *ctx, sths34pf80_int_mode_t val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1414,7 +1418,7 @@ int32_t sths34pf80_int_mode_set(stmdev_ctx_t *ctx, sths34pf80_int_mode_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_int_mode_get(stmdev_ctx_t *ctx, sths34pf80_int_mode_t *val)
+int32_t sths34pf80_int_mode_get(const stmdev_ctx_t *ctx, sths34pf80_int_mode_t *val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1462,7 +1466,7 @@ int32_t sths34pf80_int_mode_get(stmdev_ctx_t *ctx, sths34pf80_int_mode_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_drdy_mode_set(stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t val)
+int32_t sths34pf80_drdy_mode_set(const stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1486,7 +1490,7 @@ int32_t sths34pf80_drdy_mode_set(stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_drdy_mode_get(stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t *val)
+int32_t sths34pf80_drdy_mode_get(const stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t *val)
 {
   sths34pf80_ctrl3_t ctrl3;
   int32_t ret;
@@ -1531,7 +1535,7 @@ int32_t sths34pf80_drdy_mode_get(stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_func_cfg_write(stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data, uint8_t len)
+int32_t sths34pf80_func_cfg_write(const stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data, uint8_t len)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1583,7 +1587,7 @@ int32_t sths34pf80_func_cfg_write(stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_func_cfg_read(stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data, uint8_t len)
+int32_t sths34pf80_func_cfg_read(const stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data, uint8_t len)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1635,7 +1639,7 @@ int32_t sths34pf80_func_cfg_read(stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data,
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_presence_threshold_set(stmdev_ctx_t *ctx, uint16_t val)
+int32_t sths34pf80_presence_threshold_set(const stmdev_ctx_t *ctx, uint16_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1672,7 +1676,7 @@ int32_t sths34pf80_presence_threshold_set(stmdev_ctx_t *ctx, uint16_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_presence_threshold_get(stmdev_ctx_t *ctx, uint16_t *val)
+int32_t sths34pf80_presence_threshold_get(const stmdev_ctx_t *ctx, uint16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -1693,7 +1697,7 @@ int32_t sths34pf80_presence_threshold_get(stmdev_ctx_t *ctx, uint16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_motion_threshold_set(stmdev_ctx_t *ctx, uint16_t val)
+int32_t sths34pf80_motion_threshold_set(const stmdev_ctx_t *ctx, uint16_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1730,7 +1734,7 @@ int32_t sths34pf80_motion_threshold_set(stmdev_ctx_t *ctx, uint16_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_motion_threshold_get(stmdev_ctx_t *ctx, uint16_t *val)
+int32_t sths34pf80_motion_threshold_get(const stmdev_ctx_t *ctx, uint16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -1751,7 +1755,7 @@ int32_t sths34pf80_motion_threshold_get(stmdev_ctx_t *ctx, uint16_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tambient_shock_threshold_set(stmdev_ctx_t *ctx, uint16_t val)
+int32_t sths34pf80_tambient_shock_threshold_set(const stmdev_ctx_t *ctx, uint16_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1788,7 +1792,7 @@ int32_t sths34pf80_tambient_shock_threshold_set(stmdev_ctx_t *ctx, uint16_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tambient_shock_threshold_get(stmdev_ctx_t *ctx, uint16_t *val)
+int32_t sths34pf80_tambient_shock_threshold_get(const stmdev_ctx_t *ctx, uint16_t *val)
 {
   uint8_t buff[2];
   int32_t ret;
@@ -1809,7 +1813,7 @@ int32_t sths34pf80_tambient_shock_threshold_get(stmdev_ctx_t *ctx, uint16_t *val
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_motion_hysteresis_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_motion_hysteresis_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1838,7 +1842,7 @@ int32_t sths34pf80_motion_hysteresis_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_motion_hysteresis_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_motion_hysteresis_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   int32_t ret;
 
@@ -1855,7 +1859,7 @@ int32_t sths34pf80_motion_hysteresis_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_presence_hysteresis_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_presence_hysteresis_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1884,7 +1888,7 @@ int32_t sths34pf80_presence_hysteresis_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_presence_hysteresis_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_presence_hysteresis_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   int32_t ret;
 
@@ -1901,7 +1905,7 @@ int32_t sths34pf80_presence_hysteresis_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tambient_shock_hysteresis_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_tambient_shock_hysteresis_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -1930,7 +1934,7 @@ int32_t sths34pf80_tambient_shock_hysteresis_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tambient_shock_hysteresis_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_tambient_shock_hysteresis_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   int32_t ret;
 
@@ -1954,7 +1958,7 @@ typedef struct
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-static int32_t sths34pf80_algo_config_set(stmdev_ctx_t *ctx, sths34pf80_algo_config_t val)
+static int32_t sths34pf80_algo_config_set(const stmdev_ctx_t *ctx, sths34pf80_algo_config_t val)
 {
   uint8_t tmp;
   int32_t ret;
@@ -1973,7 +1977,7 @@ static int32_t sths34pf80_algo_config_set(stmdev_ctx_t *ctx, sths34pf80_algo_con
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-static int32_t sths34pf80_algo_config_get(stmdev_ctx_t *ctx, sths34pf80_algo_config_t *val)
+static int32_t sths34pf80_algo_config_get(const stmdev_ctx_t *ctx, sths34pf80_algo_config_t *val)
 {
   uint8_t tmp;
   int32_t ret;
@@ -1994,7 +1998,7 @@ static int32_t sths34pf80_algo_config_get(stmdev_ctx_t *ctx, sths34pf80_algo_con
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tobject_algo_compensation_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_tobject_algo_compensation_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -2026,7 +2030,7 @@ int32_t sths34pf80_tobject_algo_compensation_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_tobject_algo_compensation_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_tobject_algo_compensation_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   sths34pf80_algo_config_t config;
   int32_t ret;
@@ -2045,7 +2049,7 @@ int32_t sths34pf80_tobject_algo_compensation_get(stmdev_ctx_t *ctx, uint8_t *val
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_presence_abs_value_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_presence_abs_value_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_ctrl1_t ctrl1;
   uint8_t odr;
@@ -2077,7 +2081,7 @@ int32_t sths34pf80_presence_abs_value_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_presence_abs_value_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_presence_abs_value_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   sths34pf80_algo_config_t config;
   int32_t ret;
@@ -2096,7 +2100,7 @@ int32_t sths34pf80_presence_abs_value_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_int_or_pulsed_set(stmdev_ctx_t *ctx, uint8_t val)
+int32_t sths34pf80_int_or_pulsed_set(const stmdev_ctx_t *ctx, uint8_t val)
 {
   sths34pf80_algo_config_t config;
   int32_t ret;
@@ -2116,7 +2120,7 @@ int32_t sths34pf80_int_or_pulsed_set(stmdev_ctx_t *ctx, uint8_t val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_int_or_pulsed_get(stmdev_ctx_t *ctx, uint8_t *val)
+int32_t sths34pf80_int_or_pulsed_get(const stmdev_ctx_t *ctx, uint8_t *val)
 {
   sths34pf80_algo_config_t config;
   int32_t ret;
@@ -2135,7 +2139,7 @@ int32_t sths34pf80_int_or_pulsed_get(stmdev_ctx_t *ctx, uint8_t *val)
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t sths34pf80_algo_reset(stmdev_ctx_t *ctx)
+int32_t sths34pf80_algo_reset(const stmdev_ctx_t *ctx)
 {
   uint8_t tmp;
   int32_t ret;
