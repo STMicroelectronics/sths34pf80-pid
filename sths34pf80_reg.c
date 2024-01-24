@@ -19,6 +19,8 @@
 
 #include "sths34pf80_reg.h"
 
+static int32_t sths34pf80_reset_algo_bit_set(const stmdev_ctx_t *ctx);
+
 /**
   * @defgroup  STHS34PF80
   * @brief     This file provides a set of functions needed to drive the
@@ -418,7 +420,7 @@ static int32_t sths34pf80_odr_safe_set(const stmdev_ctx_t *ctx,
      * Do a clean reset algo procedure everytime odr is changed to an
      * operative state.
      */
-    ret += sths34pf80_algo_reset(ctx);
+    ret += sths34pf80_reset_algo_bit_set(ctx);
 
     /* set new odr */
     ctrl1.odr = (odr_new & 0xfU);
@@ -1660,7 +1662,7 @@ int32_t sths34pf80_presence_threshold_set(const stmdev_ctx_t *ctx, uint16_t val)
   buff[0] = (uint8_t)(val - (buff[1] * 256U));
   ret += sths34pf80_func_cfg_write(ctx, STHS34PF80_PRESENCE_THS, &buff[0], 2);
 
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -1718,7 +1720,7 @@ int32_t sths34pf80_motion_threshold_set(const stmdev_ctx_t *ctx, uint16_t val)
   buff[0] = (uint8_t)(val - (buff[1] * 256U));
   ret += sths34pf80_func_cfg_write(ctx, STHS34PF80_MOTION_THS, &buff[0], 2);
 
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -1776,7 +1778,7 @@ int32_t sths34pf80_tambient_shock_threshold_set(const stmdev_ctx_t *ctx, uint16_
   buff[0] = (uint8_t)(val - (buff[1] * 256U));
   ret += sths34pf80_func_cfg_write(ctx, STHS34PF80_TAMB_SHOCK_THS, &buff[0], 2);
 
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -1826,7 +1828,7 @@ int32_t sths34pf80_motion_hysteresis_set(const stmdev_ctx_t *ctx, uint8_t val)
 
   ret += sths34pf80_func_cfg_write(ctx, STHS34PF80_HYST_MOTION, &val, 1);
 
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -1872,7 +1874,7 @@ int32_t sths34pf80_presence_hysteresis_set(const stmdev_ctx_t *ctx, uint8_t val)
 
   ret += sths34pf80_func_cfg_write(ctx, STHS34PF80_HYST_PRESENCE, &val, 1);
 
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -1918,7 +1920,7 @@ int32_t sths34pf80_tambient_shock_hysteresis_set(const stmdev_ctx_t *ctx, uint8_
 
   ret += sths34pf80_func_cfg_write(ctx, STHS34PF80_HYST_TAMB_SHOCK, &val, 1);
 
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -2014,7 +2016,7 @@ int32_t sths34pf80_tobject_algo_compensation_set(const stmdev_ctx_t *ctx, uint8_
   ret = sths34pf80_algo_config_get(ctx, &config);
   config.comp_type = val;
   ret += sths34pf80_algo_config_set(ctx, config);
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -2065,7 +2067,7 @@ int32_t sths34pf80_presence_abs_value_set(const stmdev_ctx_t *ctx, uint8_t val)
   ret = sths34pf80_algo_config_get(ctx, &config);
   config.sel_abs = val;
   ret += sths34pf80_algo_config_set(ctx, config);
-  ret += sths34pf80_algo_reset(ctx);
+  ret += sths34pf80_reset_algo_bit_set(ctx);
 
   /* Set saved odr back */
   ret += sths34pf80_odr_safe_set(ctx, ctrl1, odr);
@@ -2131,6 +2133,39 @@ int32_t sths34pf80_int_or_pulsed_get(const stmdev_ctx_t *ctx, uint8_t *val)
   return ret;
 }
 
+/*
+ * Internal routine to reset algo bit
+ */
+static int32_t sths34pf80_reset_algo_bit_set(const stmdev_ctx_t *ctx)
+{
+  sths34pf80_page_rw_t page_rw = {0};
+  int32_t ret;
+
+  /* Enable access to embedded functions register */
+  ret = sths34pf80_mem_bank_set(ctx, STHS34PF80_EMBED_FUNC_MEM_BANK);
+
+  /* Enable write mode */
+  page_rw.func_cfg_write = 1;
+  ret += sths34pf80_write_reg(ctx, STHS34PF80_PAGE_RW, (uint8_t *)&page_rw, 1);
+
+  /* Select register address (it will autoincrement when writing) */
+  uint8_t addr = STHS34PF80_RESET_ALGO;
+  ret += sths34pf80_write_reg(ctx, STHS34PF80_FUNC_CFG_ADDR, &addr, 1);
+
+  /* Write data */
+  uint8_t data = 0x01;
+  ret += sths34pf80_write_reg(ctx, STHS34PF80_FUNC_CFG_DATA, &data, 1);
+
+  /* Disable write mode */
+  page_rw.func_cfg_write = 0;
+  ret += sths34pf80_write_reg(ctx, STHS34PF80_PAGE_RW, (uint8_t *)&page_rw, 1);
+
+  /* Disable access to embedded functions register */
+  ret += sths34pf80_mem_bank_set(ctx, STHS34PF80_MAIN_MEM_BANK);
+
+  return ret;
+}
+
 /**
   * @brief  Reset algo
   *
@@ -2141,11 +2176,20 @@ int32_t sths34pf80_int_or_pulsed_get(const stmdev_ctx_t *ctx, uint8_t *val)
   */
 int32_t sths34pf80_algo_reset(const stmdev_ctx_t *ctx)
 {
-  uint8_t tmp;
+  sths34pf80_ctrl1_t ctrl1;
+  uint8_t odr;
   int32_t ret;
 
-  tmp = 1;
-  ret = sths34pf80_func_cfg_write(ctx, STHS34PF80_RESET_ALGO, &tmp, 1);
+  /* Save current odr and enter PD mode */
+  ret = sths34pf80_read_reg(ctx, STHS34PF80_CTRL1, (uint8_t *)&ctrl1, 1);
+  odr = ctrl1.odr;
+  ret += sths34pf80_safe_power_down(ctx, ctrl1);
+
+  ret += sths34pf80_reset_algo_bit_set(ctx);
+
+  /* Set saved odr back */
+  ctrl1.odr = odr;
+  ret += sths34pf80_write_reg(ctx, STHS34PF80_CTRL1, (uint8_t *)&ctrl1, 1);
 
   return ret;
 }
