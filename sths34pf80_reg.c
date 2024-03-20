@@ -75,7 +75,10 @@ int32_t __weak sths34pf80_read_reg(const stmdev_ctx_t *ctx, uint8_t reg,
 {
   int32_t ret;
 
-  if (ctx == NULL) return -1;
+  if (ctx == NULL)
+  {
+    return -1;
+  }
 
   ret = ctx->read_reg(ctx->handle, reg, data, len);
 
@@ -98,7 +101,10 @@ int32_t __weak sths34pf80_write_reg(const stmdev_ctx_t *ctx, uint8_t reg,
 {
   int32_t ret;
 
-  if (ctx == NULL) return -1;
+  if (ctx == NULL)
+  {
+    return -1;
+  }
 
   ret = ctx->write_reg(ctx->handle, reg, data, len);
 
@@ -349,8 +355,8 @@ int32_t sths34pf80_tobject_sensitivity_set(const stmdev_ctx_t *ctx, uint16_t *va
   int32_t ret;
 
   data.sens = (*val >= 2048U) ?
-        (*val - 2048U + 8U) / 16U :
-        (*val - 2048U - 8U) / 16U;
+              (*val - 2048U + 8U) / 16U :
+              (*val - 2048U - 8U) / 16U;
   ret = sths34pf80_write_reg(ctx, STHS34PF80_SENS_DATA, (uint8_t *)&data, 1);
   *val = (int8_t)data.sens * 16U + 2048U;
 
@@ -391,7 +397,8 @@ static int32_t sths34pf80_safe_power_down(const stmdev_ctx_t *ctx, sths34pf80_ct
   int32_t ret;
 
   /* if sensor is already in power-down then do nothing */
-  if (ctrl1->odr == 0U) {
+  if (ctrl1->odr == 0U)
+  {
     return 0;
   }
 
@@ -400,12 +407,16 @@ static int32_t sths34pf80_safe_power_down(const stmdev_ctx_t *ctx, sths34pf80_ct
 
   /* wait DRDY bit go to '1'. Maximum wait may be up to 4 sec (0.25 Hz) */
   uint16_t retry = 0U;
-  do {
+  do
+  {
     ret += sths34pf80_drdy_status_get(ctx, &status);
     ctx->mdelay(1);
   } while (status.drdy == 0U && retry++ < 4000U);
 
-  if (ret != 0 || retry >= 4000U) { return -1; };
+  if (ret != 0 || retry >= 4000U)
+  {
+    return -1;
+  };
 
   /* perform power-down */
   ctrl1->odr = 0U;
@@ -435,7 +446,8 @@ static int32_t sths34pf80_odr_safe_set(const stmdev_ctx_t *ctx,
   /* perform power-down transition in a safe way. */
   ret = sths34pf80_safe_power_down(ctx, ctrl1);
 
-  if (odr_new > 0U) {
+  if (odr_new > 0U)
+  {
     /*
      * Do a clean reset algo procedure everytime odr is changed to an
      * operative state.
@@ -471,7 +483,7 @@ int32_t sths34pf80_odr_set(const stmdev_ctx_t *ctx, sths34pf80_odr_t val)
   {
     ret = sths34pf80_read_reg(ctx, STHS34PF80_AVG_TRIM, (uint8_t *)&avg_trim, 1);
 
-    switch(avg_trim.avg_tmos)
+    switch (avg_trim.avg_tmos)
     {
       default:
       case STHS34PF80_AVG_TMOS_2:
@@ -1282,7 +1294,8 @@ int32_t sths34pf80_route_int_set(const stmdev_ctx_t *ctx, sths34pf80_route_int_t
   if (ret == 0)
   {
     ctrl3.ien = ((uint8_t)val & 0x3U);
-    if (val == STHS34PF80_INT_OR) {
+    if (val == STHS34PF80_INT_OR)
+    {
       ctrl3.int_latched = 0; /* guarantee that latched is zero in INT_OR case */
     }
     ret = sths34pf80_write_reg(ctx, STHS34PF80_CTRL3, (uint8_t *)&ctrl3, 1);
@@ -1632,7 +1645,7 @@ int32_t sths34pf80_func_cfg_read(const stmdev_ctx_t *ctx, uint8_t addr, uint8_t 
 
   for (i = 0; i < len; i++)
   {
-  /* Select register address */
+    /* Select register address */
     reg_addr = addr + i;
     ret += sths34pf80_write_reg(ctx, STHS34PF80_FUNC_CFG_ADDR, &reg_addr, 1);
 
@@ -1668,7 +1681,8 @@ int32_t sths34pf80_presence_threshold_set(const stmdev_ctx_t *ctx, uint16_t val)
   uint8_t buff[2];
   int32_t ret;
 
-  if ((val & 0x8000U) != 0x0U) {
+  if ((val & 0x8000U) != 0x0U)
+  {
     /* threshold values are on 15 bits */
     return -1;
   }
@@ -1726,7 +1740,8 @@ int32_t sths34pf80_motion_threshold_set(const stmdev_ctx_t *ctx, uint16_t val)
   uint8_t buff[2];
   int32_t ret;
 
-  if ((val & 0x8000U) != 0x0U) {
+  if ((val & 0x8000U) != 0x0U)
+  {
     /* threshold values are on 15 bits */
     return -1;
   }
@@ -1784,7 +1799,8 @@ int32_t sths34pf80_tambient_shock_threshold_set(const stmdev_ctx_t *ctx, uint16_
   uint8_t buff[2];
   int32_t ret;
 
-  if ((val & 0x8000U) != 0x0U) {
+  if ((val & 0x8000U) != 0x0U)
+  {
     /* threshold values are on 15 bits */
     return -1;
   }
@@ -2024,7 +2040,10 @@ int32_t sths34pf80_tobject_algo_compensation_set(const stmdev_ctx_t *ctx, uint8_
   ret = sths34pf80_read_reg(ctx, STHS34PF80_CTRL1, (uint8_t *)&ctrl1, 1);
   odr = ctrl1.odr;
   ret += sths34pf80_odr_safe_set(ctx, &ctrl1, 0);
-  if (ret != 0) { return ret; }
+  if (ret != 0)
+  {
+    return ret;
+  }
 
   ret = sths34pf80_algo_config_get(ctx, &config);
   config.comp_type = val;
@@ -2075,7 +2094,10 @@ int32_t sths34pf80_presence_abs_value_set(const stmdev_ctx_t *ctx, uint8_t val)
   ret = sths34pf80_read_reg(ctx, STHS34PF80_CTRL1, (uint8_t *)&ctrl1, 1);
   odr = ctrl1.odr;
   ret += sths34pf80_odr_safe_set(ctx, &ctrl1, 0);
-  if (ret != 0) { return ret; }
+  if (ret != 0)
+  {
+    return ret;
+  }
 
   ret = sths34pf80_algo_config_get(ctx, &config);
   config.sel_abs = val;

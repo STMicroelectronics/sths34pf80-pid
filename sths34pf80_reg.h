@@ -604,7 +604,8 @@ typedef enum
   STHS34PF80_AVG_T_1 = 0x3,
 } sths34pf80_avg_tambient_num_t;
 int32_t sths34pf80_avg_tambient_num_set(const stmdev_ctx_t *ctx, sths34pf80_avg_tambient_num_t val);
-int32_t sths34pf80_avg_tambient_num_get(const stmdev_ctx_t *ctx, sths34pf80_avg_tambient_num_t *val);
+int32_t sths34pf80_avg_tambient_num_get(const stmdev_ctx_t *ctx,
+                                        sths34pf80_avg_tambient_num_t *val);
 
 typedef enum
 {
@@ -714,12 +715,14 @@ int32_t sths34pf80_int_or_get(const stmdev_ctx_t *ctx, sths34pf80_int_or_t *val)
 
 typedef struct
 {
-  enum {
+  enum
+  {
     STHS34PF80_PUSH_PULL = 0x0,
     STHS34PF80_OPEN_DRAIN = 0x1,
   } pin;
 
-  enum {
+  enum
+  {
     STHS34PF80_ACTIVE_HIGH = 0x0,
     STHS34PF80_ACTIVE_LOW = 0x1,
   } polarity;
@@ -727,14 +730,16 @@ typedef struct
 int32_t sths34pf80_int_mode_set(const stmdev_ctx_t *ctx, sths34pf80_int_mode_t val);
 int32_t sths34pf80_int_mode_get(const stmdev_ctx_t *ctx, sths34pf80_int_mode_t *val);
 
-typedef enum {
+typedef enum
+{
   STHS34PF80_DRDY_PULSED = 0x0,
   STHS34PF80_DRDY_LATCHED = 0x1,
 } sths34pf80_drdy_mode_t;
 int32_t sths34pf80_drdy_mode_set(const stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t val);
 int32_t sths34pf80_drdy_mode_get(const stmdev_ctx_t *ctx, sths34pf80_drdy_mode_t *val);
 
-int32_t sths34pf80_func_cfg_write(const stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data, uint8_t len);
+int32_t sths34pf80_func_cfg_write(const stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data,
+                                  uint8_t len);
 int32_t sths34pf80_func_cfg_read(const stmdev_ctx_t *ctx, uint8_t addr, uint8_t *data, uint8_t len);
 
 int32_t sths34pf80_presence_threshold_set(const stmdev_ctx_t *ctx, uint16_t val);
