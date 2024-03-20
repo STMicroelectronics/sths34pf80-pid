@@ -30,7 +30,7 @@ This directory contains the STHS34PF80 component drivers.
 # Update history
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section1" aria-hidden="true">
 <label for="collapse-section1" aria-hidden="true">V1.0.0 / 20-June-2023</label>
 <div>
 
@@ -56,13 +56,28 @@ This directory contains the STHS34PF80 component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section3" aria-hidden="true">
 <label for="collapse-section3" aria-hidden="true">V2.0.0 / 07-Nov-2023</label>
 <div>
 
 ## Main changes
 
 - Redefine API name scheme removing "TMOS"
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section4" checked aria-hidden="true">
+<label for="collapse-section4" aria-hidden="true">V3.0.0 / 20-Mar-2024</label>
+<div>
+
+## Main changes
+
+- Fixed code style (Artistic Style Version 3.4.13)
+- Fix sths34pf80_safe_power_down never reaching drdy == 1.
+- Fix potential endless recursion
+- Add "const" to ctx arg for all APIs
 
 ##
 
